@@ -1,0 +1,7 @@
+ClusterName=unicorn-ec2
+RegionName=us-east-2
+FluentBitHttpPort='2020'
+FluentBitReadFromHead='Off'
+[[ ${FluentBitReadFromHead} = 'On' ]] && FluentBitReadFromTail='Off'|| FluentBitReadFromTail='On'
+[[ -z ${FluentBitHttpPort} ]] && FluentBitHttpServer='Off' || FluentBitHttpServer='On'
+kubectl create configmap fluent-bit-cluster-info --from-literal=cluster.name=unicorn-ec2 --from-literal=http.server=us-east-2 --from-literal=http.port='2020' --from-literal=read.head='off' --from-literal=read.tail='on' --from-literal=logs.region=us-east-2 -n amazon-cloudwatch

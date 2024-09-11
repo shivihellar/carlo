@@ -1,0 +1,4 @@
+Use Baked AMI
+Strict rules on security group on both inbount and outbound.
+Use Spot instances
+Encrypt EBS

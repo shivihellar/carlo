@@ -1,0 +1,3 @@
+To push logs into cloudwatch.
+    Create a role with AmazonAPIGatewayPushToCloudWatchLogs this policy.
+    

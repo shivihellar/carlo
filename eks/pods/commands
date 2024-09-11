@@ -1,0 +1,9 @@
+kubectl create -f <file-name>
+kubectl get pods
+kubectl log lookup-server-74f49bb6d7-gt625
+kubectl describe pods root-server-7cc7cb488b-dn7v2
+kubectl top pods
+
+kubectl get nodes -o wide
+
+kubectl exec -it lookup-server-74f49bb6d7-gt625 -- bash

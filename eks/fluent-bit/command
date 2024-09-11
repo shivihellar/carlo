@@ -1,0 +1,2 @@
+kubectl apply -f https://raw.githubusercontent.com/aws-samples/amazon-cloudwatch-container-insights/latest/k8s-deployment-manifest-templates/deployment-mode/daemonset/container-insights-monitoring/cloudwatch-namespace.yaml
+kubectl create configmap fluent-bit-cluster-info --from-literal=cluster.name=unicorn-ec2 --from-literal=http.server=us-east-2 --from-literal=http.port='2020' --from-literal=read.head='off' --from-literal=read.tail='on' --from-literal=logs.region=us-east-2 -n amazon-cloudwatch

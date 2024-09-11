@@ -1,0 +1,27 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: unicorn-eks-alb
+  annotations:
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/load-balancer-name: "unicorn-eks-alb"
+spec:
+  ingressClassName: alb
+  rules:
+    - http:
+        paths:
+        # - path: /
+        #   pathType: Prefix
+        #   backend:
+        #     service:
+        #       name: unicorn-service
+        #       port:
+        #         number: 80
+        - path: /lookup
+          pathType: Prefix
+          backend:
+            service:
+              name: lookup-service
+              port:
+                number: 80

@@ -1,0 +1,39 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: unicorn-ec2
+  region: us-east-2
+
+vpc:
+  id: "vpc-015865f33a540eb96"
+  subnets:
+    private:
+      us-east-2a:
+        id: "subnet-0b0e9fa7a234e6a2c"  
+      us-east-2b:
+        id: "subnet-023e6f18d96aebdcf"
+    public:
+      us-east-2a:
+        id: "subnet-01acc5f1a978b4e49"  
+      us-east-2b:
+        id: "subnet-0b9c975772bfc9ba3"
+
+nodeGroups:
+  - name: standard-workers
+    instanceType: t3.medium
+    desiredCapacity: 2
+    minSize: 1
+    maxSize: 4
+    privateNetworking: true  
+    ssh:
+      allow: true  
+      publicKeyName: Bastion  
+
+iam:
+  withOIDC: true  
+
+cloudWatch:
+  clusterLogging:
+    enableTypes: ["*"]  
+

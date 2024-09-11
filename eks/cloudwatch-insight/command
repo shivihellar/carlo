@@ -1,0 +1,3 @@
+Cloud monitring
+eksctl create iamserviceaccount --name cloudwatch-agent --namespace amazon-cloudwatch --cluster unicorn-fargate --role-name my-service-account-role --attach-policy-arn arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy --role-only --approve
+aws eks create-addon --addon-name amazon-cloudwatch-observability --cluster-name unicorn-ec2 --service-account-role-arn arn:aws:iam::813658811196:role/my-service-account-role

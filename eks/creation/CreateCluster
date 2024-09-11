@@ -1,0 +1,2 @@
+eksctl create cluster --name=unicorn-fargate --fargate
+eksctl create cluster -f cluster-config.yaml

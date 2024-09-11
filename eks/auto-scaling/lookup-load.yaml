@@ -1,0 +1,20 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: load-generator
+spec:
+  template:
+    spec:
+      containers:
+      - name: load-generator
+        image: williamyeh/hey:latest
+        args:
+        - "-c"        # Number of concurrent workers
+        - "1000"       # Increase to 100 workers
+        - "-q"        # Number of requests to run per worker
+        - "20"        # Increase to 10 requests per worker
+        - "-z"        # Duration of the test
+        - "60m"       # Set to run for 60 minutes
+        - "http://lookup-service.default.svc/"  # Target URL
+      restartPolicy: Never
+  backoffLimit: 4

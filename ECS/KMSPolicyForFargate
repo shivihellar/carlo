@@ -1,0 +1,44 @@
+https://docs.aws.amazon.com/AmazonECS/latest/developerguide/fargate-create-storage-key.html
+{
+      "Sid": "Allow generate data key access for Fargate tasks.",
+      "Effect": "Allow",
+      "Principal": { "Service":"fargate.amazonaws.com" },
+      "Action": [
+        "kms:GenerateDataKeyWithoutPlaintext"
+      ],
+      "Condition": {
+        "StringEquals": {
+          "kms:EncryptionContext:aws:ecs:clusterAccount": [
+            "813658811196"
+          ],
+          "kms:EncryptionContext:aws:ecs:clusterName": [
+             "unicorn"
+          ]   
+        }
+      },
+      "Resource": "*"
+    },
+    {
+      "Sid": "Allow grant creation permission for Fargate tasks.",
+      "Effect": "Allow",
+      "Principal": { "Service":"fargate.amazonaws.com" },
+      "Action": [
+        "kms:CreateGrant"
+      ],
+      "Condition": {
+        "StringEquals": {
+          "kms:EncryptionContext:aws:ecs:clusterAccount": [
+            "813658811196"
+          ],
+          "kms:EncryptionContext:aws:ecs:clusterName": [
+             "unicorn"
+          ]   
+        },
+       "ForAllValues:StringEquals": {
+          "kms:GrantOperations": [
+             "Decrypt"
+          ]
+       }
+      },
+      "Resource": "*"
+    }

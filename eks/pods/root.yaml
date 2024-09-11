@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lookup-server
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: unicorn-app
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: unicorn-app
+    spec:
+      containers:
+      - image: 813658811196.dkr.ecr.us-east-2.amazonaws.com/lookup:latest
+        imagePullPolicy: Always
+        name: unicorn-app
+        ports:
+        - name: http
+          containerPort: 80
+        - name: memcache
+          containerPort: 5432
+        - name: efs
+          containerPort: 2049
+        resources:
+          requests:
+            cpu: "200m"       
+            memory: "256Mi"   
+          limits:
+            cpu: "400m"       
+            memory: "512Mi"
+        volumeMounts:
+        - name: efs-storage
+          mountPath: /var/www/lookup-server/logs
+      volumes:
+      - name: efs-storage
+        persistentVolumeClaim:
+          claimName: efs-claim
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: lookup-service
+spec:
+  ports:
+    - port: 80
+      name: http
+      targetPort: 80
+      protocol: TCP
+    - port: 5432
+      name: memcache
+      targetPort: 5432
+      protocol: TCP
+  type: NodePort
+  selector:
+    app.kubernetes.io/name: unicorn-app

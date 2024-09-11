@@ -1,0 +1,6 @@
+prerequisite
+#Install eksctl from https://eksctl.io/installation/
+    #check current user using this command: aws sts get-caller-identity
+#Install choco from https://chocolatey.org/install#individual
+#Install kubectl from choco using: choco install kubernetes-cli
+#Install helo from choco using: choco install kubernetes-helm

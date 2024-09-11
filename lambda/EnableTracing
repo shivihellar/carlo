@@ -1,0 +1,9 @@
+To configure X-Ray integration on an AWS Lambda function
+1. Open the AWS Lambda console .
+2. Select Functions from the left navigation bar.
+3. Choose your function.
+4. On the Configuration tab, scroll down to the Additional monitoring tools card. ...
+5. Select Edit.
+
+CLI command
+aws lambda update-function-configuration --function-name <function-name> --tracing-config Mode=Active

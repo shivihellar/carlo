@@ -1,0 +1,4 @@
+Use 813658811196.dkr.ecr.us-east-2.amazonaws.com/root-server:latest this uri in task defination.
+Enable both encryption while creating cluster
+Use Traget Tracking and Step Scaling
+You have to create 2 alarm for scale up and down

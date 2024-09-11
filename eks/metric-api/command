@@ -1,0 +1,5 @@
+kubectl apply -f metrics-server.yaml
+kubectl edit deployment metrics-server -n kube-system
+#add --kubelet-insecure-tls flag or wait for some sec
+kubectl get apiservices
+kubectl describe apiservice v1beta1.metrics.k8s.io
