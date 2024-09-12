@@ -1,0 +1,25 @@
+Use AnyCompany's JamMonitorStation to capture the beacon sent by the compromised JamInstanceA to the target JamInstanceB. To complete this challenge you will need to:
+
+Properly configure traffic mirroring so that the JamMonitorStation can capture traffic sent by JamInstanceA
+Logon to the JamMonitorStation via System Manager's Session Manager to capture the traffic.
+
+Go to the EC2 Dashboard, look at the EC2 network property for the JamMonitorStation and record its Interface ID.
+Look at the EC2 network property for JamInstanceA and record its Interface ID.
+Go to the VPC Dashboard, select Mirror Targets and configure the target to be the JamMonitorStation's Interface ID recorded in step 1. Enter an appropriate name for the target, such as mirror target
+Go to VPC, select Mirror Filters and configure Inbound and Outbound rules. Enter an appropriate name for the mirrow filter, such as mirror filter
+Edit the inbound rule and add a rule for All Protocols with a source and destination CIDR of 10.0.0.0/8
+Edit the outbound rule and add a rule for All Protocols with a source and destination CIDR of 10.0.0.0/8
+Go to VPC, select Mirror Sessions and fill the appropriate information.
+For the Mirror Source use the Interface ID you recorded in step 2
+For the Mirror Target use the name of the target you created in step 3
+Enter a session number, i.e., 1
+Enter a VNI number, i.e. 100
+Select the filter you created in step 4
+You must edit the JamMonitorStation's SG and add a rule to allow inbound UDP port 4789 from 0.0.0.0/0 because traffic mirroring uses VXLAN encapsulation over that port when sending traffic to the target.
+Use the Systems Manager Session Manager to connect to the JamMonitorStation by going to Systems Manager -> Session Manager -> Start Session -> Select the Monitoring Station and start the session.
+Run sudo tcpdump -lnvX icmp at command prompt to see the flag
+Note: Step 8 is a shortcut to get to the flag. The proper way to configure the JamMonitorStation's is to create an interface that decapsulates the VXLAN traffic becasue VPC Traffic Mirroring encapsulates the mirror traffic using VXLAN encapsulation. The proper steps are to run tcpdump on the VXLAN interface with the commands shown below
+
+sudo ip link add vxlan0 type vxlan id 100 dev eth0 local 10.0.1.11 dstport 4789 (This creartes the VXLAN inteface and decapsulates VXLAN traffic using the VXLAN Id supplied in step 5.4)
+sudo ip link set vxlan0 up (This ebavles the VXLAN interface vxlan0)
+sudo tcpdump -lnvXi vxlan0 icmp (This captures traffic on the vxlan0)
